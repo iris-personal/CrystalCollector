@@ -9,6 +9,10 @@
     <p>Color: {{ crystal.colors }}</p>
     <p>Properties: {{ crystal.properties }}</p>
   </div>
+  <div class="card-action">
+    <a href="{% url 'crystals_update' crystal.id %}">Edit</a>
+    <a href="{% url 'crystals_delete' crystal.id %}">Delete</a>
+  </div>
 </div>
 
 {% endblock %}

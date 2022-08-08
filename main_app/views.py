@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import Crystal
 
 # Create your views here.
@@ -17,4 +17,12 @@ def crystals_detail(request, crystal_id):
 class CrystalCreate(CreateView):
   model = Crystal
   fields = '__all__'
+  success_url = '/crystals/'
+
+class CrystalUpdate(UpdateView):
+  model = Crystal
+  fields = ['colors', 'properties']
+
+class CrystalDelete(DeleteView):
+  model = Crystal
   success_url = '/crystals/'
