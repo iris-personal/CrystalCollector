@@ -19,8 +19,9 @@ class Crystal(models.Model):
         return reverse('detail', kwargs={'crystal_id': self.id})
 
 class Cleansing(models.Model):
-    date = models.DateField('date of last cleanse')
+    date = models.DateField('Date of Last Cleanse')
     cleanse = models.CharField(
+        'Method of Cleansing Used',
         max_length=1,
         choices=CLEANSES,
         default=CLEANSES[0][0]
