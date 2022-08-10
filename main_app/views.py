@@ -8,11 +8,14 @@ from .models import Crystal, Cut
 # Create your views here.
 def home(request):
   return render(request, 'home.html')
+
 def about(request):
   return render(request, 'about.html')
+
 def crystals_index(request):
   crystals = Crystal.objects.all()
   return render(request, 'crystals/index.html', { 'crystals': crystals })
+
 def crystals_detail(request, crystal_id):
   crystal = Crystal.objects.get(id=crystal_id)
   id_list = crystal.cuts.all().values_list('id')
@@ -27,7 +30,7 @@ def crystals_detail(request, crystal_id):
 
 class CrystalCreate(CreateView):
   model = Crystal
-  fields = ['type', 'colors', 'properties']
+  fields = ['name', 'colors', 'properties']
   success_url = '/crystals/'
 
 class CrystalUpdate(UpdateView):
@@ -52,19 +55,3 @@ class CutList(ListView):
 
 class CutDetail(DetailView):
   model = Cut
-
-class CutCreate(CreateView):
-  model = Cut
-  fields = '__all__'
-
-class CutUpdate(UpdateView):
-  model = Cut
-  fields = ['type']
-
-class CutDelete(DeleteView):
-  model = Cut
-  success_url = '/cuts/'
-
-def assoc_cut(request, crystal_id, cut_id):
-  Crystal.objects.get(id=crystal_id).cuts.add(cut_id)
-  return redirect('detail', crystal_id=crystal_id)

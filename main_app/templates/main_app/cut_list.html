@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Cut List</h1>
+
+{% for cut in cut_list %}
+  <a href="{% url 'cuts_detail' cut.id %}">
+    <div class="card">
+        <div class="card-content">
+            <span class="card-title">{{ cut.name }}</span>
+        </div>
+    </div>
+  </a>
+{% endfor %}
+
+{% endblock %}

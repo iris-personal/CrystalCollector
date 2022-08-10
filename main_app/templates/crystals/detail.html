@@ -6,7 +6,7 @@
     <div class="col s6">
         <div class="card">
             <div class="card-content">
-                <span class="card-title">{{ crystal.type }}</span>
+                <span class="card-title">{{ crystal.name }}</span>
                 <p>Color: {{ crystal.colors }}</p>
                 <p>Properties: {{ crystal.properties }}</p>
             </div>
@@ -24,9 +24,9 @@
         </form>
         <br>
         {% if crystal.cleansed %}
-          <div class="card-panel teal-text center-align">{{crystal.type}} has been cleansed recently.</div>
+          <div class="card-panel teal-text center-align">{{crystal.name}} has been cleansed recently.</div>
         {% else %}
-          <div class="card-panel red-text center-align">{{crystal.type}} needs to be cleansed.</div>
+          <div class="card-panel red-text center-align">{{crystal.name}} needs to be cleansed.</div>
         {% endif %}
         <table class="striped">
             <thead>
@@ -43,6 +43,7 @@
         </table>
     </div>
 </div>
+
 <script>
     const dateEl = document.getElementById('id_date');
     M.Datepicker.init(dateEl, {
