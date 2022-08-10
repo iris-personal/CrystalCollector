@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, DetailView
 
 from main_app.forms import CleansingForm
-from .models import Crystal
+from .models import Crystal, Cut
 
 # Create your views here.
 def home(request):
@@ -14,14 +15,19 @@ def crystals_index(request):
   return render(request, 'crystals/index.html', { 'crystals': crystals })
 def crystals_detail(request, crystal_id):
   crystal = Crystal.objects.get(id=crystal_id)
+  id_list = crystal.cuts.all().values_list('id')
+  cuts_crystal_doesnt_have = Crystal.objects.exclude(id__in=id_list)
   cleansing_form=CleansingForm()
   return render(request, 'crystals/detail.html', {
-    'crystal': crystal, 'cleansing_form': cleansing_form
-    })
+    'crystal': crystal, 
+    'cleansing_form': cleansing_form,
+    'cuts': cuts_crystal_doesnt_have
+    }
+  )
 
 class CrystalCreate(CreateView):
   model = Crystal
-  fields = '__all__'
+  fields = ['type', 'colors', 'properties']
   success_url = '/crystals/'
 
 class CrystalUpdate(UpdateView):
@@ -38,4 +44,27 @@ def add_cleansing(request, crystal_id):
     new_cleansing = form.save(commit=False)
     new_cleansing.crystal_id = crystal_id
     new_cleansing.save()
+  return redirect('detail', crystal_id=crystal_id)
+
+
+class CutList(ListView):
+  model = Cut
+
+class CutDetail(DetailView):
+  model = Cut
+
+class CutCreate(CreateView):
+  model = Cut
+  fields = '__all__'
+
+class CutUpdate(UpdateView):
+  model = Cut
+  fields = ['type']
+
+class CutDelete(DeleteView):
+  model = Cut
+  success_url = '/cuts/'
+
+def assoc_cut(request, crystal_id, cut_id):
+  Crystal.objects.get(id=crystal_id).cuts.add(cut_id)
   return redirect('detail', crystal_id=crystal_id)
