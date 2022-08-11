@@ -34,6 +34,13 @@ class Crystal(models.Model):
         today = date.today()
         return self.cleansing_set.filter(date__year=today.year, date__month=today.month).count() >= 1
 
+class Photo(models.Model):
+    url = models.CharField(max_length=200)
+    crystal = models.ForeignKey(Crystal, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"Photo for crystal_id: {self.crystal_id} @{self.url}"
+
 class Cleansing(models.Model):
     date = models.DateField('Date of Last Cleanse')
     cleanse = models.CharField(
