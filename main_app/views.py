@@ -28,6 +28,14 @@ def crystals_detail(request, crystal_id):
     }
   )
 
+def assoc_cut(request, crystal_id, cut_id):
+  Crystal.objects.get(id=crystal_id).cuts.add(cut_id)
+  return redirect('detail', crystal_id=crystal_id)
+
+def unassoc_cut(request, crystal_id, cut_id):
+  Crystal.objects.get(id=crystal_id).cuts.remove(cut_id)
+  return redirect('detail', crystal_id=crystal_id)
+
 class CrystalCreate(CreateView):
   model = Crystal
   fields = ['name', 'colors', 'properties']
@@ -55,3 +63,15 @@ class CutList(ListView):
 
 class CutDetail(DetailView):
   model = Cut
+
+class CutCreate(CreateView):
+  model = Cut
+  fields = '__all__'
+
+class CutUpdate(UpdateView):
+  model = Cut
+  fields = ['name']
+
+class CutDelete(DeleteView):
+  model = Cut
+  success_url = '/cuts/'
