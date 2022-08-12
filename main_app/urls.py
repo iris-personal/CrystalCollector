@@ -18,4 +18,5 @@ urlpatterns = [
     path('cuts/create/', views.CutCreate.as_view(), name='cuts_create'),
     path('cuts/<int:pk>/update/', views.CutUpdate.as_view(), name='cuts_update'),
     path('cuts/<int:pk>/delete/', views.CutDelete.as_view(), name='cuts_delete'),
+    path('accounts/signup/', views.signup, name='signup'),
 ]

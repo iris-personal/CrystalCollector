@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from django.contrib.auth.models import User
 from datetime import date
 
 CLEANSES = (
@@ -24,7 +25,7 @@ class Crystal(models.Model):
     colors = models.CharField(max_length=100)
     properties = models.TextField(max_length=250)
     cuts = models.ManyToManyField(Cut)
-
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
